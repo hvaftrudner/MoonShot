@@ -7,10 +7,41 @@
 
 import SwiftUI
 
+
 struct ContentView: View {
+    
+    let astronauts: [Astronaut] = Bundle.main.decode("astronauts.json")
+    let missions: [Mission] = Bundle.main.decode("missions.json")
+    
+    @State private var toggleInfo: Bool = true
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        NavigationView{
+            List(missions, id: \.id){ mission in
+                NavigationLink(destination: MissionView(mission: mission, astronauts: self.astronauts)) {
+                    Image(mission.image)
+                        .resizable()
+                        //.aspectRatio(contentMode: .fit)
+                        .scaledToFit()
+                        .frame(width: 44, height: 44)
+                    
+                    VStack(alignment: .leading){
+                        Text(mission.displayName)
+                            .font(.headline)
+                        Text(toggleInfo ? mission.formattedLaunchDate : mission.formattedNames)
+                            .font(.caption)
+                        
+                    }
+                }
+                
+            }
+            .navigationBarTitle("MoonShot")
+            .navigationBarItems(trailing:
+                Button(toggleInfo ? "name" : "date", action: {
+                    self.toggleInfo.toggle()
+                })
+            )
+        }
     }
 }
 
