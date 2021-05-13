@@ -29,6 +29,7 @@ struct AstronautView: View {
                         .layoutPriority(1)
                     
                 }
+                .accessibility(label: Text("name: \(astronaut.name)"))
             }
         }
         .navigationBarTitle(Text(astronaut.name), displayMode: .inline)

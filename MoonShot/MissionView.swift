@@ -20,12 +20,22 @@ struct MissionView: View {
     var body: some View {
         GeometryReader{ geo in
             ScrollView(.vertical){
-                VStack{
-                    Image(self.mission.image)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxWidth: geo.size.width * 0.7)
-                        .padding(.top)
+                VStack(alignment: .center){
+                    GeometryReader { imageGeo in
+                        Image(self.mission.image)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: geo.size.width * 0.7)
+                            .padding(50)
+                            
+                            //geo challenge 1
+                            
+                            .scaleEffect(imageGeo.frame(in: .global).minY > (geo.frame(in: .global).midY) / 9 ? (imageGeo.frame(in: .global).midY / 200) + 0.15 : 0.8)
+                            .onTapGesture {
+                                print(imageGeo.frame(in: .global).midY / 200)
+                            }
+                            
+                    }
                     
                     Text("Launched on: \(self.mission.formattedLaunchDate)")
                         .font(.headline)
@@ -54,6 +64,7 @@ struct MissionView: View {
                                 Spacer()
                             }
                             .padding(.horizontal)
+                            .accessibility(label: Text("crewmember \(crewMember.astronaut.name)"))
                         }
                         .buttonStyle(PlainButtonStyle())
                         

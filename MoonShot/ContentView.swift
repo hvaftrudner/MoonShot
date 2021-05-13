@@ -25,6 +25,7 @@ struct ContentView: View {
                         .scaledToFit()
                         .frame(width: 44, height: 44)
                     
+                    
                     VStack(alignment: .leading){
                         Text(mission.displayName)
                             .font(.headline)
@@ -33,7 +34,7 @@ struct ContentView: View {
                         
                     }
                 }
-                
+                .accessibility(label: Text("mission \(mission.displayName)"))
             }
             .navigationBarTitle("MoonShot")
             .navigationBarItems(trailing:
